@@ -10,17 +10,17 @@
 class ClinicalValue
 {
 public: 
-   virtual ~ClinicalValue()=0;   //Destructor
+   virtual ~ClinicalValue() = 0;   //Destructor
 };
 inline ClinicalValue::~ClinicalValue() { }
 
 class MissingValue : public ClinicalValue
 {
 private: 
-   MissingValue(){}                       //Constructor
-   ~MissingValue(){}                      //Destrucor
-   MissingValue(const MissingValue&);     //Prevent copy-construction
-   MissingValue& operator=(const MissingValue&);
+   MissingValue(){}                                
+   ~MissingValue(){}                               
+   MissingValue(const MissingValue&);              //Prevent copy-construction
+   MissingValue& operator=(const MissingValue&);   //Prevent assignment
 public: 
    static MissingValue& Instance()
    {

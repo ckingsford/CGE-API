@@ -1,7 +1,6 @@
 #include <iostream>
-#include "ClinicalValue.h"
-#include "ClinicalSchema.h"
 #include "ClinicalRecord.h"
+#include "Genotype.h"
 int main()
 {
    using std::cout;
@@ -9,14 +8,17 @@ int main()
    using std::string;
    using std::shared_ptr;
    cout<<"code compiled\n";
-/*
-   shared_ptr<ClinicalSchema> test_schema(new ClinicalSchema());
-   ClinicalField* test0 = new ClinicalField("A");
-   ClinicalField* test1 = new ClinicalField("B");
-   ClinicalField* test2 = new ClinicalField("C");
-   ClinicalField* test3 = new ClinicalField("D");
-   ClinicalField* test4 = new ClinicalField("E");
-   ClinicalField* test5 = new ClinicalField("F");
+
+   shared_ptr<GenotypeSchema> test_schema(new GenotypeSchema());
+   GenomicLocation loc1 (1,23);
+   GenomicLocation loc2 (2,24);
+
+   VariantField* test0 = new VariantField("A",loc1);
+   VariantField* test1 = new VariantField("B",loc2);
+   VariantField* test2 = new VariantField("C",loc1);
+   VariantField* test3 = new VariantField("D",loc2);
+   VariantField* test4 = new VariantField("E",loc1);
+   VariantField* test5 = new VariantField("F",loc2);
 
    test_schema->appendField(test0);
    test_schema->appendField(test1);
@@ -25,9 +27,10 @@ int main()
    test_schema->appendField(test4);
    test_schema->appendField(test5);
    
-   ClinicalRecord* test_record = new ClinicalRecord();
-   test_record->setSchema(test_schema);
+   Genotype* test_record = new Genotype();
 
+   test_record->setSchema(test_schema);
+/*
    vector<string> order = test_record->schema()->fieldNames();
    for(auto it = order.begin(); it!=order.end();++it)
       cout << *it << "\n";

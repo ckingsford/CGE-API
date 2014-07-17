@@ -1,5 +1,4 @@
 #include "ClinicalRecord.h"
-#include <iostream>
 std::shared_ptr<ClinicalSchema> ClinicalRecord::schema() const
 {
    return clinical_schema;
@@ -29,7 +28,7 @@ void ClinicalRecord::setClinicalValue(const std::string& name, ClinicalValue* v)
 const ClinicalValue* ClinicalRecord::value(size_t pos) const
 {
    if(pos >= values.size())
-      throw std::out_of_range("This is nota valid position.");
+      throw std::out_of_range("This is not a valid position.");
    return (values.at(pos).get());
 }
 
