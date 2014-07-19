@@ -11,6 +11,7 @@ class ClinicalValue
 {
 public: 
    virtual ~ClinicalValue() = 0;   //Destructor
+   std::string type();
 };
 inline ClinicalValue::~ClinicalValue() { }
 
@@ -27,6 +28,7 @@ public:
       static MissingValue singleton;
       return singleton;
    }
+   std::string type() {return "Missing";}
 };
 
 class StringValue : public ClinicalValue
@@ -36,6 +38,7 @@ private:
 public:
    StringValue(std::string n) : value(n) {}
    operator std::string() {return value;}
+   std::string type() {return "String";}
 };
 
 class BoolValue : public ClinicalValue
@@ -45,6 +48,7 @@ private:
 public:
    BoolValue(bool n) : value(n) {}
    operator bool() {return value;}
+   std::string type() {return "Bool";}
 };
 
 class DateValue : public ClinicalValue
@@ -61,6 +65,7 @@ public:
       year = *(args.begin() + 2);
       boost::gregorian::date temp(year, month, day);  //checks for valid date
    }
+   std::string type() {return "Date";}
 };
 
 class DoubleValue : public ClinicalValue
@@ -70,6 +75,7 @@ private:
 public:
    DoubleValue(double n) : value(n) {}
    operator double() {return value;}
+   std::string type() {return "Double";}
 };
 
 class IntValue : public ClinicalValue
@@ -79,6 +85,7 @@ private:
 public:
    IntValue(int n) : value(n) {}
    operator int() {return value;}
+   std::string type() {return "Int";}
 };
 
 class HistoryValue : public ClinicalValue
@@ -107,7 +114,8 @@ public:
    const_iterator begin() const {return history_vector.begin();}
    iterator end() {return history_vector.end();}
    const_iterator end() const {return history_vector.end();}
-
+   
+   std::string type() {return "History";}
 };
 
 #endif

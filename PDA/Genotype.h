@@ -27,5 +27,4 @@ public:
    Population* population();
    void setPopulation(Population* p);
 };
-
 #endif

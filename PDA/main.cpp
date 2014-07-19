@@ -10,6 +10,7 @@ int main()
    using std::vector;
    using std::string;
    using std::shared_ptr;
+   //VariantField* foo = new VariantField();
    cout<<"code compiled\n";
 
    return 0;
