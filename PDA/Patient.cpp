@@ -36,3 +36,14 @@ size_t Patient::size()
    size_t genotype_size = patient_genotype->schema()->size();
    return (clin_size + genotype_size);
 }
+
+Value Patient::value(size_t i)
+{
+   size_t clin_size = patient_clin_record->schema()->size();  
+   if (i >= clin_size){
+      return Value(patient_genotype->variant(i-clin_size));
+   }
+   else{
+      return (Value((*patient_clin_record)[i]));
+   }
+} 

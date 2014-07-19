@@ -6,17 +6,13 @@
 class Value
 {
 private:
-   ClinicalValue* clin_value;
-   char* variant;
+   std::shared_ptr<ClinicalValue> clin_value;
+   std::shared_ptr<char> variant;
 public: 
-   Value(ClinicalValue* c) : clin_value(c) 
-   { 
-      variant = nullptr;
-   }
-   Value(char* v) : variant(v)
-   {
-      clin_value = nullptr;
-   }
+   Value(std::shared_ptr<ClinicalValue> c) : clin_value(c)
+   { }
+   Value(char v) : variant(std::make_shared<char>(v))
+   { }
    bool isClinical()
    {
       return (clin_value != nullptr);
@@ -25,13 +21,13 @@ public:
    {
       return (variant != nullptr);
    }
-   char* getVariant()
+   char getVariant()
    {
-      return variant;
+      return *variant;
    }
    ClinicalValue* getClinical()
    {
-      return clin_value;
+      return clin_value.get();
    }
 
 };
