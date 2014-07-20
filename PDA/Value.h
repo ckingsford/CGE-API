@@ -6,26 +6,30 @@
 class Value
 {
 private:
-   std::shared_ptr<ClinicalValue> clin_value;
+   std::shared_ptr<const ClinicalValue> clin_value;
    std::shared_ptr<char> variant;
 public: 
-   Value(std::shared_ptr<ClinicalValue> c) : clin_value(c)
-   { }
+   Value(const ClinicalValue* c) : clin_value((std::shared_ptr<const ClinicalValue>)c)
+   { 
+      variant = std::shared_ptr<char> (nullptr);
+   }
    Value(char v) : variant(std::make_shared<char>(v))
-   { }
+   { 
+      clin_value = std::shared_ptr<ClinicalValue> (nullptr);
+   }
    bool isClinical()
    {
-      return (clin_value != nullptr);
+      return (clin_value.get() != nullptr);
    }
    bool isVariant()
    {
-      return (variant != nullptr);
+      return (variant.get() != nullptr);
    }
    char getVariant()
    {
       return *variant;
    }
-   ClinicalValue* getClinical()
+   const ClinicalValue* getClinical()
    {
       return clin_value.get();
    }

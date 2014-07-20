@@ -29,8 +29,8 @@ public:
    void removeField(const std::string & name);
    size_t size() const;
    size_t indexOfField(const std::string & name) const;
-   T* const field(size_t i) const;
-   T* const field(const std::string & name) const;
+   const T* field(size_t i) const;
+   const T* field(const std::string & name) const;
    bool hasField(const std::string & name) const;
    std::string name(size_t i);
    const std::vector<std::string> fieldNames() const;
@@ -138,7 +138,7 @@ size_t FieldSchema<T>::indexOfField(const std::string & name) const
 }
 
 template <typename T>
-T* const FieldSchema<T>::field(size_t i) const
+const T* FieldSchema<T>::field(size_t i) const
 {
    if (visible_list.at(i) == false || i >= size() || i == NonExistantField)
       throw std::invalid_argument("There is no field at this index");
@@ -148,7 +148,7 @@ T* const FieldSchema<T>::field(size_t i) const
 }
 
 template <typename T>
-T* const FieldSchema<T>::field(const std::string & name) const
+const T* FieldSchema<T>::field(const std::string & name) const
 {
    return this->field(this->indexOfField(name));
 }

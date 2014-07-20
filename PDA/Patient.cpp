@@ -37,13 +37,33 @@ size_t Patient::size()
    return (clin_size + genotype_size);
 }
 
-Value Patient::value(size_t i)
+Value Patient::value(size_t i) const
 {
    size_t clin_size = patient_clin_record->schema()->size();  
    if (i >= clin_size){
       return Value(patient_genotype->variant(i-clin_size));
    }
    else{
-      return (Value((*patient_clin_record)[i]));
+      return (Value(patient_clin_record->value(i)));
    }
 } 
+
+Field Patient::field(size_t i) const
+{
+   size_t clin_size = patient_clin_record->schema()->size();  
+   if (i >= clin_size){
+      return Field(patient_genotype->schema()->field(i-clin_size));
+   }
+   else{
+      return Field(patient_clin_record->schema()->field(i));
+   }
+}
+
+PatientIterator Patient::begin()
+{
+   return PatientIterator(this, 0);
+}
+PatientIterator Patient::end()
+{
+   return PatientIterator(this,size());
+}

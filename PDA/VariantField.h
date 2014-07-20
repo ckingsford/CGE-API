@@ -23,11 +23,11 @@ public:
       seq_variants.resize(256);
    }
 
-   const std::string& name() {return variant_name;}
+   const std::string& name() const {return variant_name;}
    
    void setName(const std::string& name) {variant_name = name;}
    
-   GenomicLocation location() {return variant_location;}
+   GenomicLocation location() const {return variant_location;}
    
    void setLocation(GenomicLocation p) {variant_location = p;}
 
@@ -35,7 +35,7 @@ public:
 
    void setVariantList(std::vector<std::string> s){seq_variants = s;}
 
-   std::string variant(char i) {return seq_variants.at(i);}
+   std::string variant(char i) const {return seq_variants.at(i);}
 
    void setVariant(char i, std::string s) {seq_variants.at(i) = s;}
 };

@@ -14,9 +14,9 @@ public:
    //PatientField(std::initializer_list<T> il) : 
    //name(*(args.begin())), required((args.begin()+1)*)
    void setName(const std::string & n) {field_name = n;}
-   const std::string name() {return field_name;}
+   const std::string name() const {return field_name;}
    void setRequired(bool req) {required = req;}
-   bool isRequired() {return required;}
+   bool isRequired() const {return required;}
 };
 
 class ClinicalField : public PatientField

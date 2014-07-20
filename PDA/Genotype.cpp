@@ -21,7 +21,7 @@ void Genotype::setVariant(size_t i, char v)
       throw std::out_of_range("This position doesn't exist in the schema");
    if (i >= variants.size())
       variants.resize(this->size());
-   if (this->schema()->FieldSchema<VariantField>::field(i)->variant(v) == "")
+   if (this->schema()->field(i)->variant(v) == "")
       throw std::out_of_range("No variant exists at this index.");
    variants.at(i) = v;
    

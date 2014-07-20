@@ -7,7 +7,7 @@
 class ClinicalSchema : public FieldSchema<ClinicalField>
 {
 public:
-   bool isRequired(const std::string & name)
+   bool isRequired(const std::string & name) const
    {
       return field(name)->isRequired();
    }
