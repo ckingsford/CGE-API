@@ -2,10 +2,10 @@
 #define CLINICALVALUE_H
 
 #include <string>
-#include "boost/date_time/gregorian/gregorian.hpp"
 #include <vector>
 #include <utility>
 #include <memory>
+#include "Date.h"
 //#include <iostream>
 class ClinicalValue
 {
@@ -63,7 +63,8 @@ public:
       day = *(args.begin());
       month = *(args.begin() + 1);
       year = *(args.begin() + 2);
-      boost::gregorian::date temp(year, month, day);  //checks for valid date
+      if (!date::isValidDate(day, month, year))
+            throw std::invalid_argument("Invalid Date");
    }
    std::string type() {return "Date";}
 };
