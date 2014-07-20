@@ -5,7 +5,6 @@
 #include "ClinicalRecord.h"
 #include "Value.h"
 #include "Field.h"
-#include <utility>
 
 class PatientIterator;
 

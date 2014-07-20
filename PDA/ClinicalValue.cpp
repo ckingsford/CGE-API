@@ -84,24 +84,3 @@ size_t HistoryValue::size() const
 {
    return history_vector.size();
 }
-/*
-int main()//tests
-{
-   HistoryValue* the_history = new HistoryValue(); 
-   std::cout<<"Size is: "<< the_history->size()<<"\n";
-   IntValue* seven = new IntValue(7);
-   the_history -> addDataPoint (DateValue{23,5,1995}, seven);
-   std::cout<<"Size is: "<< the_history->size()<<"\n";
-   IntValue* eight = new IntValue(8);
-   the_history -> addDataPoint (DateValue{23,6,1995},eight);
-   
-   std::cout<<"Size is: "<< the_history->size()<<"\n";
-   IntValue* temp_int = (IntValue*) (the_history -> valueAtDate(DateValue{23,5,1997}));
-   std::cout << int(*temp_int) << "\n";
-
-   the_history -> removeDataPoint (DateValue{23,6,1995});
-   std::cout<<"Size is: "<< the_history->size()<<"\n";  
-
-   return 0;
-}
-*/

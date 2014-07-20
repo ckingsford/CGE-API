@@ -3,7 +3,7 @@
  */
 
 #include <iostream>
-#include "Patient.h"
+#include "PatientSet.h"
 int main()
 {
    using std::cout;
