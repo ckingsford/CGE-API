@@ -1,12 +1,13 @@
 CC = g++
 
 CFLAGS = -g -Wall -pedantic -std=c++11
-WEKA = -I include/wekacpp/include -I include/wekacpp/lib
-INCLUDES = -I PDA -I ML -I modelClasses -I dataAcquisition $(WEKA)
+INCLUDES = -I PDA -I dataAcquisition -I ML -I modelClasses 
+DEPENDENCIES = $(wildcard PDA/*.cpp dataAcquisition/*.cpp ML/*.cpp modelClasses/*.cpp)
 
+all: CGE
 
-all:
-	$(CC) $(CFLAGS) main.cpp $(INCLUDES) -o a.out
+CGE: main.cpp $(HEADERS)
+	$(CC) $(CFLAGS) main.cpp $(DEPENDENCIES) $(INCLUDES) -o a.out
 
 clean:
-	$(RM) main.o
+	$(RM) *.o

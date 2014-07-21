@@ -3,14 +3,11 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include "PatientSet.h"
-#include "ARFF.h"
 int main()
 {
-   using std::cout;
-   using std::vector;
-   using std::string;
-   using std::shared_ptr;
+   using namespace std;
 
    cout<<"code compiled\n";
    return 0;
