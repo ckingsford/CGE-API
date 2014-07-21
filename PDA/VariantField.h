@@ -5,6 +5,9 @@
 #include<vector>
 #include"GenomicLocation.h"
 
+namespace cge{
+   namespace patients{
+   
 class VariantField
 {
 private: 
@@ -40,4 +43,6 @@ public:
    void setVariant(char i, std::string s) {seq_variants.at(i) = s;}
 };
 
+}//namespace patients
+}//namespace cge
 #endif

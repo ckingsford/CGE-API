@@ -3,6 +3,9 @@
 
 #include "FieldSchema.h"
 #include "PatientField.h"
+   
+namespace cge{
+   namespace patients{
 
 class ClinicalSchema : public FieldSchema<ClinicalField>
 {
@@ -12,4 +15,7 @@ public:
       return field(name)->isRequired();
    }
 };
+
+}//namespace patients
+}//namespace cge
 #endif

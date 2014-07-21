@@ -4,6 +4,9 @@
 #include "ClinicalSchema.h"
 #include "ClinicalValue.h"
 
+namespace cge{
+   namespace patients{
+
 class ClinicalRecord
 {
 private: 
@@ -27,4 +30,7 @@ public:
    const std::vector<std::shared_ptr<const ClinicalValue>> 
       valuesAsVector() const;
 };
+
+}//namespace patients
+}//namespace cge
 #endif

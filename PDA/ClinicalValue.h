@@ -6,7 +6,10 @@
 #include <utility>
 #include <memory>
 #include "Date.h"
-//#include <iostream>
+
+namespace cge{
+   namespace patients{
+  
 class ClinicalValue
 {
 public: 
@@ -119,4 +122,6 @@ public:
    std::string type() {return "History";}
 };
 
+}//namespace patients
+}//namespace cge
 #endif

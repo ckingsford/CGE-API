@@ -4,6 +4,9 @@
 #include <string>
 #include "ReferenceGenome.h"
 
+namespace cge{
+   namespace patients{
+
 class GenomicLocation
 {
 private:
@@ -48,4 +51,6 @@ inline bool operator==(const GenomicLocation& lhs, const GenomicLocation& rhs)
    return false;
 }
 
+}//namespace patients
+}//namespace cge
 #endif

@@ -2,6 +2,10 @@
 #define PATIENTSET_H
 
 #include "Patient.h"
+
+namespace cge{
+   namespace patients{
+   
 using PatientPredicate = std::function<bool(const Patient& P)>;
 class PatientSet
 {
@@ -30,4 +34,7 @@ public:
    iterator end() {return patient_set.end();}
    const_iterator end() const {return patient_set.end();}
 };
+
+}//namespace patients
+}//namespace cge
 #endif

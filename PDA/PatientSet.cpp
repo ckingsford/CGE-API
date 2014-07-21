@@ -1,5 +1,8 @@
 #include "PatientSet.h"
 
+namespace cge{
+   namespace patients{
+   
 void PatientSet::appendPatient(std::shared_ptr<Patient> P)
 {
    patient_set.push_back(P);
@@ -72,4 +75,5 @@ const std::shared_ptr<Patient> PatientSet::operator[](size_t i) const
    return patient_set.at(i);
 }
 
-
+}//namespace patients
+}//namespace cge

@@ -3,6 +3,9 @@
 
 #include<string>
 
+namespace cge{
+   namespace patients{
+   
 class Population
 {
 private:
@@ -14,4 +17,7 @@ public:
 
    void setName(const std::string& s) {pop_name = s;}
 };
+
+}//namespace patients
+}//namespace cge
 #endif

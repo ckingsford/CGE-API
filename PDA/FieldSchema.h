@@ -7,6 +7,9 @@
 #include<limits>
 #include<algorithm>
 
+namespace cge{
+   namespace patients{
+
 template <typename T>
 class FieldSchema
 {
@@ -201,4 +204,6 @@ void FieldSchema<T>::setFieldOrder(const std::vector<std::string> & order)
    }
 } 
 
+}//namespace patients
+}//namespace cge
 #endif

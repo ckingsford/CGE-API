@@ -8,6 +8,7 @@
 int main()
 {
    using namespace std;
+   using namespace cge::patients;
 
    cout<<"code compiled\n";
    return 0;

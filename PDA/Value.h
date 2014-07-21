@@ -3,6 +3,9 @@
 
 #include "ClinicalValue.h"
 
+namespace cge{
+   namespace patients{
+   
 class Value
 {
 private:
@@ -36,4 +39,6 @@ public:
 
 };
 
+}//namespace patients
+}//namespace cge
 #endif

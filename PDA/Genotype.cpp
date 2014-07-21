@@ -1,5 +1,8 @@
 #include "Genotype.h"
 
+namespace cge{
+   namespace patients{
+   
 std::shared_ptr<GenotypeSchema> Genotype::schema()
 {
   return genotype_schema;
@@ -58,3 +61,6 @@ void Genotype::setPopulation(Population* p)
 {
    pop = p;
 }
+
+}//namespace patients
+}//namespace cge

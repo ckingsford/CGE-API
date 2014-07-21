@@ -5,6 +5,10 @@
 #include <memory>
 #include "Population.h"
 #include "GenotypeSchema.h"
+
+namespace cge{
+   namespace patients{
+   
 class Genotype
 {
 private: 
@@ -27,4 +31,7 @@ public:
    Population* population();
    void setPopulation(Population* p);
 };
+
+}//namespace patients
+}//namespace cge
 #endif

@@ -1,5 +1,8 @@
 #include "ClinicalValue.h"
 
+namespace cge{
+   namespace patients{
+
 int compareDate(DateValue a_date, DateValue b_date) 
 //0 if dates are equal, negative if a comes first, positive if b comes first
 {
@@ -84,3 +87,6 @@ size_t HistoryValue::size() const
 {
    return history_vector.size();
 }
+
+}//namespace patients
+}//namespace cge

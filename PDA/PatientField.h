@@ -3,6 +3,10 @@
 
 #include <string>
 #include <utility>
+
+namespace cge{
+   namespace patients{
+   
 class PatientField
 {
 private:
@@ -27,4 +31,6 @@ public:
 
 };
 
+}//namespace patients
+}//namespace cge
 #endif 

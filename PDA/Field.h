@@ -4,6 +4,9 @@
 #include "VariantField.h"
 #include "PatientField.h"
 
+namespace cge{
+   namespace patients{
+   
 class Field
 {
 private: 
@@ -35,4 +38,7 @@ public:
       return clin_field;
    }
 };
+
+}//namespace patients
+}//namespace cge
 #endif

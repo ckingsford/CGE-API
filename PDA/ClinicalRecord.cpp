@@ -1,4 +1,8 @@
 #include "ClinicalRecord.h"
+
+namespace cge{
+   namespace patients{
+
 std::shared_ptr<ClinicalSchema> ClinicalRecord::schema() const
 {
    return clinical_schema;
@@ -72,3 +76,5 @@ const std::vector<std::shared_ptr<const ClinicalValue>>
    return value_vector;
 }
 
+}//namespace patients
+}//namespace cge

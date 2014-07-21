@@ -1,5 +1,8 @@
 #include "Patient.h"
 
+namespace cge{
+   namespace patients{
+   
 const std::string Patient::name()
 {
    return patient_name;
@@ -67,3 +70,6 @@ PatientIterator Patient::end()
 {
    return PatientIterator(this,size());
 }
+
+}//namespace patients
+}//namespace cge

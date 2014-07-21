@@ -3,6 +3,9 @@
 
 #include<string>
 
+namespace cge{
+   namespace patients{
+   
 class ReferenceGenome
 {
 protected:
@@ -43,4 +46,6 @@ public:
    }
 };
 
+}//namespace patients
+}//namespace cge
 #endif

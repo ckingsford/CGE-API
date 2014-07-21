@@ -4,6 +4,9 @@
 #include "FieldSchema.h"
 #include "VariantField.h"
 
+namespace cge{
+   namespace patients{
+   
 class GenotypeSchema : public FieldSchema<VariantField>
 {
 public: 
@@ -32,4 +35,6 @@ public:
  
 };
 
+}//namespace patients
+}//namespace cge
 #endif

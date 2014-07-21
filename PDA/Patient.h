@@ -6,6 +6,9 @@
 #include "Value.h"
 #include "Field.h"
 
+namespace cge{
+   namespace patients{
+   
 class PatientIterator;
 
 class Patient
@@ -65,4 +68,6 @@ public:
    }
 };
 
+}//namespace patients
+}//namespace cge
 #endif
