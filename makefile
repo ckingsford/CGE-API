@@ -1,8 +1,8 @@
 CC = g++
 
 CFLAGS = -g -Wall -pedantic -std=c++11
-INCLUDES = -I PDA -I dataAcquisition -I ML -I modelClasses 
-DEPENDENCIES = $(wildcard PDA/*.cpp dataAcquisition/*.cpp ML/*.cpp modelClasses/*.cpp)
+INCLUDES = -I PDA -I dataAcquisition -I ML -I modelClasses -I utility 
+DEPENDENCIES = $(wildcard PDA/*.cpp dataAcquisition/*.cpp ML/*.cpp modelClasses/*.cpp utility/*.cpp)
 
 all: CGE
 

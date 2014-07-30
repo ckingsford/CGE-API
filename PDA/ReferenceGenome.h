@@ -26,12 +26,13 @@ public:
       return ref_name;
    }
 };
-inline bool operator==(const ReferenceGenome& lhs, const ReferenceGenome& rhs)
+inline bool operator==
+   (const ReferenceGenome& lhs, const ReferenceGenome& rhs)
 {
    return (((lhs.name()).compare(rhs.name())) == 0);
 }
 
-class GENOME_HG19 : public  ReferenceGenome
+class GENOME_HG19 : public ReferenceGenome
 {
 private:
    GENOME_HG19(){}

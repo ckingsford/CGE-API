@@ -3,8 +3,8 @@
  */
 
 #include <iostream>
-#include <fstream>
 #include "PatientSet.h"
+#include "VCFReader.h"
 int main()
 {
    using namespace std;

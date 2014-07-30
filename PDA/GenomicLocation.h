@@ -39,11 +39,21 @@ public:
    const int position() const {return pos_num;}
 
    const std::string rsNumber() const {return rs_num;}
+   
+   const ReferenceGenome* refGenome() const {return ref_genome;}
+
+   void setRefGenome(ReferenceGenome ref) {ref_genome = &ref;} 
+
 };
 inline bool operator==(const GenomicLocation& lhs, const GenomicLocation& rhs)
 {
-   if (lhs.chromosome() == rhs.chromosome() && lhs.position() == rhs.position())
-      return true;
+   if (lhs.refGenome() != nullptr && rhs.refGenome() != nullptr){
+      if(((lhs.refGenome()->name()).compare(rhs.refGenome()->name())) == 0){
+         if (lhs.chromosome() == rhs.chromosome() && 
+               lhs.position() == rhs.position())
+            return true;
+      }
+   }
    if ((lhs.rsNumber()).compare(rhs.rsNumber()) == 0)
       return true;
    if (/*TODO*/ false)
