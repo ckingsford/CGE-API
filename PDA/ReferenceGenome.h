@@ -39,6 +39,7 @@ private:
    ~GENOME_HG19(){}
    GENOME_HG19(const GENOME_HG19&);
    GENOME_HG19& operator=(const GENOME_HG19&);
+   const std::string ref_name = "GENOME_HG19";
 public:
    static GENOME_HG19& Instance()
    {
