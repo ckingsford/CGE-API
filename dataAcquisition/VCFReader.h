@@ -25,7 +25,7 @@ public:
          isValidExt = (0 == name.compare(name.length() - 4, 4, ".vcf"));
       if (!isValidExt && name.length() > 8)
          isValidExt = 
-            (0 == name.compare(name.length() - 4, 4, ".vcf.txt"));
+            (0 == name.compare(name.length() - 8, 8, ".vcf.txt"));
       if(!isValidExt)
          throw std::invalid_argument("Invalid file type");
 
