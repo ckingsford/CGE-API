@@ -1,18 +1,20 @@
 #ifndef ARFFREADER_H
 #define ARFFREADER_H
 
-#include "PatientSet.h"
+#include "Genotype.h"
 #include "StringFunctions.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-class ARFFReader
+using namespace cge::patients;
+
+class ARFFWriter
 {
 private:
    std::string filename;
 public:
-   ARFFReader(std::string name)
+   ARFFWriter(std::string name)
    {
       bool isValidExt = false;
       if (name.length() > 5)
@@ -25,5 +27,19 @@ public:
 
       filename = name;
    }
+   
+   void writeClinical(ClinicalRecord clin_rec);
+   void writeGenomic(Genotype geno);
 };
+
+ARFFWriter::writeClinical(ClinicalRecord clin_rec)
+{
+   ofstream clin_file;
+   clin_file.open(filename);
+   //header
+   clin_file << "% 1. Title: CGE Clinical Record\n%\n";
+   clin_file << "@RELATION clinical_record\n\n";
+
+}
+
 #endif
