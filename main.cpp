@@ -5,6 +5,8 @@
 #include <iostream>
 #include "PatientSet.h"
 #include "VCFReader.h"
+#include "ARFFReader.h"
+#include "ARFFWriter.h"
 int main()
 {
    using namespace std;

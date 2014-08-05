@@ -15,6 +15,7 @@ class ClinicalValue
 public: 
    virtual ~ClinicalValue() = 0;   //Destructor
    std::string type();
+   const std::string toString() const;
 };
 inline ClinicalValue::~ClinicalValue() { }
 
@@ -32,6 +33,7 @@ public:
       return singleton;
    }
    std::string type() {return "Missing";}
+   const std::string toString() const {return "?";}
 };
 
 class StringValue : public ClinicalValue
@@ -42,6 +44,7 @@ public:
    StringValue(std::string n) : value(n) {}
    operator std::string() {return value;}
    std::string type() {return "String";}
+   const std::string toString() const {return value;}
 };
 
 class BoolValue : public ClinicalValue
@@ -52,6 +55,13 @@ public:
    BoolValue(bool n) : value(n) {}
    operator bool() {return value;}
    std::string type() {return "Bool";}
+   const std::string toString() const
+   {
+   if (value)
+      return "true";
+   else
+      return "false";
+   }
 };
 
 class DateValue : public ClinicalValue
@@ -69,6 +79,14 @@ public:
       if (!date::isValidDate(day, month, year))
             throw std::invalid_argument("Invalid Date");
    }
+   const std::string toString() const
+   {
+      std::string s_year = std::to_string(year);
+      std::string s_month = std::to_string(month);
+      std::string s_day = std::to_string(day);
+
+      return s_year + "-" + s_month + "-" + s_day;
+   }
    std::string type() {return "Date";}
 };
 
@@ -80,6 +98,7 @@ public:
    DoubleValue(double n) : value(n) {}
    operator double() {return value;}
    std::string type() {return "Double";}
+   const std::string toString() const {return (std::to_string(value));}
 };
 
 class IntValue : public ClinicalValue
@@ -90,6 +109,7 @@ public:
    IntValue(int n) : value(n) {}
    operator int() {return value;}
    std::string type() {return "Int";}
+   const std::string toString() const {return (std::to_string(value));}
 };
 
 class HistoryValue : public ClinicalValue
@@ -105,7 +125,7 @@ public:
    HistoryValue()
    {
       history_vector.reserve(1);
-   }
+   } 
    bool addDataPoint(const DateValue & d, ClinicalValue* v);
    bool removeDataPoint(const DateValue & d);
    ClinicalValue* valueAtDate(const DateValue & d) const; 
@@ -120,6 +140,24 @@ public:
    const_iterator end() const {return history_vector.end();}
    
    std::string type() {return "History";}
+   const std::string toString() const
+   {
+      std::string hist_line;
+      const std::vector<ClinicalValue*> hist_vals = valuesAsVector();
+      const std::vector<DateValue> hist_dates = datesAsVector();
+      ClinicalValue* temp;
+         for (size_t i = 0; i < hist_vals.size(); ++i){
+            temp = hist_vals.at(i);
+            hist_line.append(temp->type() + '\t');
+            hist_line.append(temp->toString() + '\t');
+            hist_line.append(hist_dates.at(i).toString());
+         
+            if (i + 1 < hist_vals.size())
+               hist_line.append("&");
+         }
+      return hist_line;
+   }
+
 };
 
 }//namespace patients
