@@ -1,5 +1,5 @@
-#ifndef ARFFREADER_H
-#define ARFFREADER_H
+#ifndef ARFFWRITER_H
+#define ARFFWRITER_H
 
 #include "Genotype.h"
 #include "StringFunctions.h"
@@ -28,13 +28,13 @@ public:
       filename = name;
    }
    
-   void writeClinical(ClinicalRecord clin_rec);
+   void writeClinical(std::shared_ptr<ClinicalRecord> clin_rec);
    void writeGenomic(Genotype geno);
 };
 
-ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
+void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
 {
-   ofstream clin_file;
+   std::ofstream clin_file;
    clin_file.open(filename);
    
    //header
@@ -51,9 +51,9 @@ ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
    clin_file << "@ATTRIBUTE required {true,false}\n";
    
    //get all info
-   const std::vector<std::shared_ptr<const ClinicalValue> values = 
+   const std::vector<std::shared_ptr<const ClinicalValue>> values = 
       clin_rec->valuesAsVector();
-   const std::vector names = clin_rec->schema()->fieldNames();
+   const std::vector<std::string> names= clin_rec->schema()->fieldNames();
    std::vector<bool> requires;
    for(auto it = names.begin(); it != names.end(); ++it)
      requires.push_back(clin_rec->schema()->isRequired(*it));
@@ -97,7 +97,7 @@ ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
          req = "false";
       clin_file << names.at(i) + ',' + req;
    }
-  
+   clin_file.close(); 
 }
 
 #endif

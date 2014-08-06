@@ -14,8 +14,8 @@ class ClinicalValue
 {
 public: 
    virtual ~ClinicalValue() = 0;   //Destructor
-   std::string type();
-   const std::string toString() const;
+   virtual const std::string type() const = 0;
+   virtual const std::string toString() const = 0;
 };
 inline ClinicalValue::~ClinicalValue() { }
 
@@ -32,7 +32,7 @@ public:
       static MissingValue singleton;
       return singleton;
    }
-   std::string type() {return "Missing";}
+   const std::string type() const {return "Missing";}
    const std::string toString() const {return "?";}
 };
 
@@ -43,7 +43,7 @@ private:
 public:
    StringValue(std::string n) : value(n) {}
    operator std::string() {return value;}
-   std::string type() {return "String";}
+   const std::string type() const {return "String";}
    const std::string toString() const {return value;}
 };
 
@@ -54,7 +54,7 @@ private:
 public:
    BoolValue(bool n) : value(n) {}
    operator bool() {return value;}
-   std::string type() {return "Bool";}
+   const std::string type() const {return "Bool";}
    const std::string toString() const
    {
    if (value)
@@ -87,7 +87,7 @@ public:
 
       return s_year + "-" + s_month + "-" + s_day;
    }
-   std::string type() {return "Date";}
+   const std::string type() const {return "Date";}
 };
 
 class DoubleValue : public ClinicalValue
@@ -97,7 +97,7 @@ private:
 public:
    DoubleValue(double n) : value(n) {}
    operator double() {return value;}
-   std::string type() {return "Double";}
+   const std::string type() const {return "Double";}
    const std::string toString() const {return (std::to_string(value));}
 };
 
@@ -108,7 +108,7 @@ private:
 public:
    IntValue(int n) : value(n) {}
    operator int() {return value;}
-   std::string type() {return "Int";}
+   const std::string type() const {return "Int";}
    const std::string toString() const {return (std::to_string(value));}
 };
 
@@ -139,7 +139,7 @@ public:
    iterator end() {return history_vector.end();}
    const_iterator end() const {return history_vector.end();}
    
-   std::string type() {return "History";}
+   const std::string type() const {return "History";}
    const std::string toString() const
    {
       std::string hist_line;
