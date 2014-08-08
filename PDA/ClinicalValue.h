@@ -79,6 +79,14 @@ public:
       if (!date::isValidDate(day, month, year))
             throw std::invalid_argument("Invalid Date");
    }
+   DateValue(int d, int m, int y)
+   {
+   if (!date::isValidDate(day, month, year))
+            throw std::invalid_argument("Invalid Date");
+      day = d;
+      month = m;
+      year = y;
+   }
    const std::string toString() const
    {
       std::string s_year = std::to_string(year);
