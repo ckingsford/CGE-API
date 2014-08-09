@@ -29,7 +29,7 @@ public:
    }
    
    void writeClinical(std::shared_ptr<ClinicalRecord> clin_rec);
-   void writeGenomic(Genotype geno);
+   void writeGenomic(std::shared_ptr<Genotype> geno);
 };
 
 void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
@@ -58,7 +58,7 @@ void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
    for(auto it = names.begin(); it != names.end(); ++it)
      requires.push_back(clin_rec->schema()->isRequired(*it));
    
-   //data
+   //data writing
    clin_file << "@data\n";
    for (size_t i = 0; i < values.size(); ++i){
       std::string val = values.at(i)->toString();
@@ -95,9 +95,52 @@ void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
          req = "true";
       else
          req = "false";
-      clin_file << names.at(i) + ',' + req;
+      clin_file << names.at(i) + ',' + req + '\n';
    }
    clin_file.close(); 
 }
 
+void ARFFWriter::writeGenomic(std::shared_ptr<Genotype> geno)
+{
+   std::ofstream geno_file;
+   geno_file.open(filename);
+   
+   //header
+   geno_file << "% 1. Title: CGE Genotype\n%\n";
+   geno_file << "@RELATION genotype\n\n";
+   //attributes
+   geno_file << "@ATTRIBUTE name STRING\n"; 
+   geno_file << "@ATTRIBUTE location STRING\n";//as chrom.pos.rs.ref
+   geno_file << "@ATTRIBUTE variant_list STRING\n";
+   geno_file << "@ATTRIBUTE variant STRING\n";
+
+   //get info
+   const std::vector<std::string> names = geno->schema()->fieldNames();
+   std::vector<std::string> locations;
+   for (auto i = geno->schema()->begin(); i != geno->schema()->end(); ++i){
+      GenomicLocation loc = (*i)->location();
+      std::string loc_string = std::to_string(loc.chromosome()) + ".";
+      loc_string += std::to_string(loc.position()) + ".";
+      loc_string += loc.rsNumber() + ".";
+      loc_string += loc.refGenome()->name();
+      locations.push_back(loc_string);
+   }
+   std::vector<std::string> variant_lists;
+   for (auto i = geno->schema()->begin(); i != geno->schema()->end(); ++i){
+      std::vector<std::string> v_list;
+      for (auto const& s : v) 
+         result += s + "\u001f"
+      variant_lists.push_back((*i)->variantList());   
+   }
+   std::vector<char> variants = geno->variantsAsVector();
+   
+   //data writing
+   geno_file << "@data\n";
+   for (size_t i = 0; i < names.size(); ++i){
+      geno_file << names[i] + "," + locations[i] + "," 
+      geno_file << variant_lists[i] + "," + variants[i] + "\n";
+   
+   }
+   geno_file.close();
+}
 #endif

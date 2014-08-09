@@ -30,7 +30,7 @@ public:
       ref_genome = &(GENOME_HG19::Instance());
    }
    
-   GenomicLocation() : chrom_num(0), pos_num(0)
+   GenomicLocation() : chrom_num(-1), pos_num(0)
    {
       ref_genome = &(GENOME_HG19::Instance());
    }

@@ -161,7 +161,7 @@ public:
             hist_line.append(hist_dates.at(i).toString());
          
             if (i + 1 < hist_vals.size())
-               hist_line.append("&");
+               hist_line.append("\u001f");
          }
       return hist_line;
    }
