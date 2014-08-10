@@ -127,17 +127,19 @@ void ARFFWriter::writeGenomic(std::shared_ptr<Genotype> geno)
    }
    std::vector<std::string> variant_lists;
    for (auto i = geno->schema()->begin(); i != geno->schema()->end(); ++i){
-      std::vector<std::string> v_list;
-      for (auto const& s : v) 
-         result += s + "\u001f"
-      variant_lists.push_back((*i)->variantList());   
+      std::vector<std::string> v_list = (*i)->variantList();
+      std::string result = "";
+      for (auto const& s : v_list) 
+         result += s + "\u001f";
+      result.pop_back();
+      variant_lists.push_back(result);   
    }
    std::vector<char> variants = geno->variantsAsVector();
    
    //data writing
    geno_file << "@data\n";
    for (size_t i = 0; i < names.size(); ++i){
-      geno_file << names[i] + "," + locations[i] + "," 
+      geno_file << names[i] + "," + locations[i] + ","; 
       geno_file << variant_lists[i] + "," + variants[i] + "\n";
    
    }

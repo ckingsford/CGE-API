@@ -18,7 +18,7 @@ private:
    ReferenceGenome* ref_genome;
    std::string rs_num;
 public:
-   GenomicLocation(int chrom, uint64_t pos, ReferenceGenome ref) : 
+   GenomicLocation(int chrom, uint64_t pos, ReferenceGenome& ref) : 
       chrom_num(chrom), pos_num(pos) 
    { 
       ref_genome = &ref;
