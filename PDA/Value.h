@@ -12,7 +12,8 @@ private:
    std::shared_ptr<const ClinicalValue> clin_value;
    std::shared_ptr<char> variant;
 public: 
-   Value(const ClinicalValue* c) : clin_value((std::shared_ptr<const ClinicalValue>)c)
+   Value(const ClinicalValue* c) : 
+      clin_value((std::shared_ptr<const ClinicalValue>) c)
    { 
       variant = std::shared_ptr<char> (nullptr);
    }

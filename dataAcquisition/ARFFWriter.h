@@ -139,9 +139,8 @@ void ARFFWriter::writeGenomic(std::shared_ptr<Genotype> geno)
    //data writing
    geno_file << "@data\n";
    for (size_t i = 0; i < names.size(); ++i){
-      geno_file << names[i] + "," + locations[i] + ","; 
-      geno_file << variant_lists[i] + "," + variants[i] + "\n";
-   
+      geno_file << names[i] + "," + locations[i] + "," + variant_lists[i] + ",";
+      geno_file << variants[i] + "\n";
    }
    geno_file.close();
 }

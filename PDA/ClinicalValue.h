@@ -6,6 +6,7 @@
 #include <utility>
 #include <memory>
 #include "Date.h"
+#include "StringFunctions.h"
 
 namespace cge{
    namespace patients{
@@ -53,6 +54,10 @@ private:
    bool value;
 public:
    BoolValue(bool n) : value(n) {}
+   BoolValue(std::string s)
+   {
+      value = s.compare("true");
+   }
    operator bool() {return value;}
    const std::string type() const {return "Bool";}
    const std::string toString() const
@@ -81,11 +86,20 @@ public:
    }
    DateValue(int d, int m, int y)
    {
-   if (!date::isValidDate(day, month, year))
-            throw std::invalid_argument("Invalid Date");
       day = d;
       month = m;
       year = y;
+      if (!date::isValidDate(day, month, year))
+            throw std::invalid_argument("Invalid Date");
+   }
+   DateValue(std::string s)
+   {
+      std::vector<std::string> date_info = utility::split(s,'-');
+      year = std::stoi(date_info[0]);
+      month = std::stoi(date_info[1]);
+      day = std::stoi(date_info[2]);
+      if (!date::isValidDate(day, month, year))
+            throw std::invalid_argument("Invalid Date");
    }
    const std::string toString() const
    {
@@ -104,6 +118,7 @@ private:
    double value;
 public:
    DoubleValue(double n) : value(n) {}
+   DoubleValue(std::string s) : value(std::stod(s)) {}
    operator double() {return value;}
    const std::string type() const {return "Double";}
    const std::string toString() const {return (std::to_string(value));}
@@ -115,6 +130,7 @@ private:
    int value;
 public:
    IntValue(int n) : value(n) {}
+   IntValue(std::string s) : value(std::stoi(s)) {}
    operator int() {return value;}
    const std::string type() const {return "Int";}
    const std::string toString() const {return (std::to_string(value));}
@@ -134,6 +150,32 @@ public:
    {
       history_vector.reserve(1);
    } 
+   HistoryValue(std::string s)
+   {
+      history_vector.reserve(1);
+      std::vector<std::string> hist_items = utility::split(s,'\u001f');
+      for(auto i = hist_items.begin(); i != hist_items.end(); ++i){
+         std::vector<std::string> item = utility::split(*i, '\t');
+         //gets Clinical Value
+         ClinicalValue* v;
+         if(item[0].compare("String") == 0)
+            v = new StringValue(item[1]);
+         else if(item[0].compare("Bool") == 0)
+            v = new BoolValue(item[1]);
+         else if(item[0].compare("Double") == 0)
+            v = new DoubleValue(item[1]);
+         else if(item[0].compare("Int") == 0)
+            v = new IntValue(item[1]);
+         else if(item[0].compare("Date") == 0)
+            v = new DateValue(item[1]);       
+         else
+            v = &MissingValue::Instance();
+         //gets Date
+         DateValue d(item[2]);
+         //adds data point to history
+         this->addDataPoint(d, v);
+      }
+   }
    bool addDataPoint(const DateValue & d, ClinicalValue* v);
    bool removeDataPoint(const DateValue & d);
    ClinicalValue* valueAtDate(const DateValue & d) const; 
