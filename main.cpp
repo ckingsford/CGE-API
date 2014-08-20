@@ -7,6 +7,7 @@
 #include "VCFReader.h"
 #include "ARFFReader.h"
 #include "ARFFWriter.h"
+#include "ModelTrainer.h"
 int main()
 {
    using namespace std;

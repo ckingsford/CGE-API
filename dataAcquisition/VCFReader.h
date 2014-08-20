@@ -12,9 +12,8 @@ using namespace cge::patients;
 class VCFReader
 {
 private: 
-   std::vector<std::string> variant_list;
    std::vector<GenomicLocation> location_list;
-   std::vector<std::vector<char>> index_list_list;
+   std::vector<std::vector<std::string>> variant_list_list;
    std::string filename;
 
 public: 
@@ -32,43 +31,23 @@ public:
       filename = name;
    }
    void read();
+   std::shared_ptr<GenotypeSchema> get_info();
 };
 
 void VCFReader::read()
 {
    //counts number of lines
-   int number_of_lines = 0;
    std::ifstream input_stream;
    std::string line;
-   input_stream.open(filename);
-   while (input_stream.good()){
-      std::getline(input_stream, line);
-      ++number_of_lines;
-   }
-   input_stream.close();
-
-   int header_lines = 0;
-   //int current_snp_index = 0;
-   //int line_index = 0;
    const int start_column = 9;
    input_stream.open(filename);
    
    while(input_stream.good()){
       std::getline(input_stream, line);
       line.shrink_to_fit();
-      if (line.compare("") == 0 || line.compare(0,2,"##"))
-         ++header_lines;
-      //Headerline
-      else if (line.compare(0,1,"#")){
-         ++header_lines;
-         std::vector<std::string> rec = utility::split(line, '\t'); //VCFheader line
-         
-         //int feature_count = number_of_lines - header_lines;
-         //int sample_count = rec.size() - start_column + 1;
-         
-         //store the variants
-         variant_list = std::vector<std::string>(rec.begin() + start_column, rec.end()); 
-      }
+      if (line.compare("") == 0 || line.compare(0,2,"##") //metadata
+            || line.compare(0,1,"#")) //header
+         continue;
       //setting SNP info
       else{
          std::vector<std::string> rec = utility::split(line, '\t');
@@ -79,14 +58,35 @@ void VCFReader::read()
          location_list.push_back(loc);
          
          //records variants(indicies)
-         std::vector<char> variants;
+         std::vector<std::string> variant_list;
+         std::vector<std::string> alleles;
+         alleles.push_back(rec[3]);
+         std::vector<std::string> alt_alleles = utility::split(rec[4], ',');
+         for (auto it = alt_alleles.begin(); it != alt_alleles.end(); ++it)
+            alleles.push_back(*it);
+
          for(size_t i = start_column; i < rec.size(); ++i){
-         //TODO   
+            std::string gt_data = (utility::split(rec[i], ':'))[0];
+            int gt_1 = std::stoi((utility::split(gt_data,'|'))[0]);
+            int gt_2 = std::stoi((utility::split(gt_data,'|'))[1]);
+            variant_list.push_back(alleles[gt_1] + "|" + alleles[gt_2]);
          }
-
-
+         variant_list_list.push_back(variant_list);
       }
    }
+}
+
+std::shared_ptr<GenotypeSchema> VCFReader::get_info()
+{
+   std::shared_ptr<GenotypeSchema> geno(new GenotypeSchema());
+   for(size_t i = 0; i < location_list.size(); ++i){
+      VariantField* f = new VariantField();
+      f->setName((location_list[i]).rsNumber());
+      f->setLocation(location_list[i]);
+      f->setVariantList(variant_list_list[i]);
+      geno->appendField(f);
+   }
+   return geno;
 }
 
 #endif
