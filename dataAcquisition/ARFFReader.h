@@ -9,34 +9,12 @@
 
 using namespace cge::patients;
 
-class ARFFReader
+namespace cge{
+  namespace dataaquisition{
+
+void readARFFtoClinical(std::istream& clin_file, PatientSet& P)
 {
-private:
-   std::string filename;
    std::shared_ptr<ClinicalRecord> clin_rec;
-   std::shared_ptr<Genotype> geno;
-public:
-   ARFFReader(std::string name)
-   {
-      bool isValidExt = false;
-      if (name.length() > 5)
-         isValidExt = (0 == name.compare(name.length() - 5, 5, ".arff"));
-      if (!isValidExt && name.length() > 9)
-         isValidExt = 
-            (0 == name.compare(name.length() - 9, 9, ".arff.txt"));
-      if(!isValidExt)
-         throw std::invalid_argument("Invalid file type");
-
-      filename = name;
-   }
-   void readClinical();
-   void readGenomic();
-};
-
-void ARFFReader::readClinical()
-{
-   std::ifstream clin_file;
-   clin_file.open(filename);
    std::string line;
    std::vector<std::string> line_info;
    size_t pos = 0;
@@ -70,14 +48,14 @@ void ARFFReader::readClinical()
       } 
       ++pos;
    }
-   
-   clin_file.close();
+   for(size_t i = 0; i < P.size(); ++i){
+      P[i]->setClinicalRecord(clin_rec);
+   }
 }
 
-void ARFFReader::readGenomic()
+void readARFFtoGenomic(std::istream& geno_file, PatientSet& P)
 {
-   std::ifstream geno_file;
-   geno_file.open(filename);
+   std::shared_ptr<Genotype> geno;
    std::string line;
    std::vector<std::string> line_info;
    std::vector<std::string> loc_info;
@@ -106,6 +84,13 @@ void ARFFReader::readGenomic()
       char v = (line_info[3])[0];
       geno->setVariant(loc, v);
    }
-   geno_file.close();
+   for(size_t i = 0; i < P.size(); ++i){
+      P[i]->setGenotype(geno);
+   }
+   
 }
+
+}//dataaquisition
+}//cge
+
 #endif

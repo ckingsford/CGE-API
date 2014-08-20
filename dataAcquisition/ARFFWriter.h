@@ -9,33 +9,12 @@
 
 using namespace cge::patients;
 
-class ARFFWriter
-{
-private:
-   std::string filename;
-public:
-   ARFFWriter(std::string name)
-   {
-      bool isValidExt = false;
-      if (name.length() > 5)
-         isValidExt = (0 == name.compare(name.length() - 5, 5, ".arff"));
-      if (!isValidExt && name.length() > 9)
-         isValidExt = 
-            (0 == name.compare(name.length() - 9, 9, ".arff.txt"));
-      if(!isValidExt)
-         throw std::invalid_argument("Invalid file type");
+namespace cge{
+   namespace dataaquisition{
 
-      filename = name;
-   }
-   
-   void writeClinical(std::shared_ptr<ClinicalRecord> clin_rec);
-   void writeGenomic(std::shared_ptr<Genotype> geno);
-};
-
-void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
+void writeARFFfromClinical(std::ostream clin_file, Patient& P)
 {
-   std::ofstream clin_file;
-   clin_file.open(filename);
+   std::shared_ptr<ClinicalRecord> clin_rec = P.clinicalRecord();
    
    //header
    clin_file << "% 1. Title: CGE Clinical Record\n%\n";
@@ -97,13 +76,11 @@ void ARFFWriter::writeClinical(std::shared_ptr<ClinicalRecord> clin_rec)
          req = "false";
       clin_file << names.at(i) + ',' + req + '\n';
    }
-   clin_file.close(); 
 }
 
-void ARFFWriter::writeGenomic(std::shared_ptr<Genotype> geno)
+void writeARFFfromGenomic(std::ostream geno_file, Patient& P)
 {
-   std::ofstream geno_file;
-   geno_file.open(filename);
+   std::shared_ptr<Genotype> geno = P.genotype();
    
    //header
    geno_file << "% 1. Title: CGE Genotype\n%\n";
@@ -142,6 +119,8 @@ void ARFFWriter::writeGenomic(std::shared_ptr<Genotype> geno)
       geno_file << names[i] + "," + locations[i] + "," + variant_lists[i] + ",";
       geno_file << variants[i] + "\n";
    }
-   geno_file.close();
 }
+
+}//dataaquisition
+}//cge
 #endif

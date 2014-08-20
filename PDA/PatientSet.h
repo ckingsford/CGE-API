@@ -25,6 +25,7 @@ public:
    PatientSet select(PatientPredicate f);
    void restrict(PatientPredicate f);
    void discard(PatientPredicate f);
+   size_t size() const;
 
    std::shared_ptr<Patient> operator[](size_t i);
    const std::shared_ptr<Patient> operator[](size_t i) const;

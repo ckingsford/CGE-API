@@ -61,6 +61,11 @@ void PatientSet::discard(PatientPredicate f)
    }
 }
 
+size_t PatientSet::size() const
+{
+   return patient_set.size();
+}
+
 std::shared_ptr<Patient> PatientSet::operator[](size_t i)
 {
    if (i >= patient_set.size())
