@@ -12,7 +12,7 @@ using namespace cge::patients;
 namespace cge{
    namespace dataaquisition{
 
-void writeARFFfromClinical(std::ostream clin_file, Patient& P)
+void writeARFFfromClinical(std::ostream& clin_file, Patient& P)
 {
    std::shared_ptr<ClinicalRecord> clin_rec = P.clinicalRecord();
    
@@ -78,7 +78,7 @@ void writeARFFfromClinical(std::ostream clin_file, Patient& P)
    }
 }
 
-void writeARFFfromGenomic(std::ostream geno_file, Patient& P)
+void writeARFFfromGenomic(std::ostream& geno_file, Patient& P)
 {
    std::shared_ptr<Genotype> geno = P.genotype();
    

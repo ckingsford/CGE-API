@@ -58,7 +58,6 @@ std::shared_ptr<GenotypeSchema> readVCFtoGenotype(std::istream& input_stream)
          field_name = std::to_string(location_list[i].chromosome()) 
             + "." + std::to_string(location_list[i].position());
       VariantField* f = new VariantField();
-      std::cout<< std::to_string(i) + "\n";
       f->setName(field_name);
       f->setLocation(location_list[i]);
       f->setVariantList(variant_list_list[i]);
