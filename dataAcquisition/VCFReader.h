@@ -12,7 +12,7 @@ using namespace cge::patients;
 namespace cge{
    namespace dataaquisition{
 
-std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
+std::shared_ptr<GenotypeSchema> readVCFtoGenotype(std::istream& input_stream)
 {
    std::vector<GenomicLocation> location_list;
    std::vector<std::vector<std::string>> variant_list_list;
@@ -22,8 +22,7 @@ std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
    while(input_stream.good()){
       std::getline(input_stream, line);
       line.shrink_to_fit();
-      if (line.compare("") == 0 || line.compare(0,2,"##") //metadata
-            || line.compare(0,1,"#")) //header
+      if (line.compare("") == 0 || line[0] == '#') //header
          continue;
       //setting SNP info
       else{
@@ -41,7 +40,6 @@ std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
          std::vector<std::string> alt_alleles = utility::split(rec[4], ',');
          for (auto it = alt_alleles.begin(); it != alt_alleles.end(); ++it)
             alleles.push_back(*it);
-
          for(size_t i = start_column; i < rec.size(); ++i){
             std::string gt_data = (utility::split(rec[i], ':'))[0];
             int gt_1 = std::stoi((utility::split(gt_data,'|'))[0]);
@@ -54,8 +52,14 @@ std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
    //returns schema
    std::shared_ptr<GenotypeSchema> geno(new GenotypeSchema());
    for(size_t i = 0; i < location_list.size(); ++i){
+      std::string field_name;
+      if ((location_list[i].rsNumber().compare("rs") == 0)
+            || (location_list[i].rsNumber().compare("") == 0))
+         field_name = std::to_string(location_list[i].chromosome()) 
+            + "." + std::to_string(location_list[i].position());
       VariantField* f = new VariantField();
-      f->setName((location_list[i]).rsNumber());
+      std::cout<< std::to_string(i) + "\n";
+      f->setName(field_name);
       f->setLocation(location_list[i]);
       f->setVariantList(variant_list_list[i]);
       geno->appendField(f);
@@ -63,6 +67,7 @@ std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
    return geno;
 
 }
+
 
 }//dataaquisition
 }//cge
