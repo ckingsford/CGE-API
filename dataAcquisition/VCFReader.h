@@ -9,38 +9,15 @@
 
 using namespace cge::patients;
 
-class VCFReader
+namespace cge{
+   namespace dataaquisition{
+
+std::shared_ptr<GenotypeSchema> read(std::istream input_stream)
 {
-private: 
    std::vector<GenomicLocation> location_list;
    std::vector<std::vector<std::string>> variant_list_list;
-   std::string filename;
-
-public: 
-   VCFReader(std::string name)
-   {
-      bool isValidExt = false;
-      if (name.length() > 4)
-         isValidExt = (0 == name.compare(name.length() - 4, 4, ".vcf"));
-      if (!isValidExt && name.length() > 8)
-         isValidExt = 
-            (0 == name.compare(name.length() - 8, 8, ".vcf.txt"));
-      if(!isValidExt)
-         throw std::invalid_argument("Invalid file type");
-
-      filename = name;
-   }
-   void read();
-   std::shared_ptr<GenotypeSchema> get_info();
-};
-
-void VCFReader::read()
-{
-   //counts number of lines
-   std::ifstream input_stream;
    std::string line;
    const int start_column = 9;
-   input_stream.open(filename);
    
    while(input_stream.good()){
       std::getline(input_stream, line);
@@ -74,10 +51,7 @@ void VCFReader::read()
          variant_list_list.push_back(variant_list);
       }
    }
-}
-
-std::shared_ptr<GenotypeSchema> VCFReader::get_info()
-{
+   //returns schema
    std::shared_ptr<GenotypeSchema> geno(new GenotypeSchema());
    for(size_t i = 0; i < location_list.size(); ++i){
       VariantField* f = new VariantField();
@@ -87,6 +61,9 @@ std::shared_ptr<GenotypeSchema> VCFReader::get_info()
       geno->appendField(f);
    }
    return geno;
+
 }
 
+}//dataaquisition
+}//cge
 #endif
