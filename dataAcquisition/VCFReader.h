@@ -66,6 +66,32 @@ std::shared_ptr<GenotypeSchema> readVCFtoGenotype(std::istream& input_stream)
    return geno;
 
 }
+bool readVCF(std::istream &input, Patient& P)
+{
+   try{
+   std::shared_ptr<GenotypeSchema> fields = readVCFtoGenotype(input); 
+   for (auto it = fields->begin(); it != fields->end(); ++it)
+      P.genotype()->schema()->appendField(*it);
+   return true;
+   }
+   catch(...){
+      return false;
+   }
+}
+bool readVCF(std::istream & input, PatientSet& p_set)
+{
+   try{
+   std::shared_ptr<GenotypeSchema> fields = readVCFtoGenotype(input);
+   for (auto i = p_set.begin(); i != p_set.end(); ++i){
+      for (auto it = fields->begin(); it != fields->end(); ++it)
+         (*i)->genotype()->schema()->appendField(*it);
+   }
+   return true;   
+   }
+   catch(...){
+      return false;
+   }
+}
 
 
 }//dataaquisition
